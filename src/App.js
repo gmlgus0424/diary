@@ -51,10 +51,27 @@ function App() {
     dataId.current += 1;
     SetData([newItem, ...data]);
   };
+
+  //리스트 삭제
+  const onRemove = (targetId) => {
+    console.log(`${targetId}가 삭제되었습니다`);
+    const newDiaryList = data.filter((it) => it.id !== targetId);
+    SetData(newDiaryList);
+  };
+
+  // 수정 기능
+  const onEdit = (targetId, newContent) => {
+    SetData(
+      data.map((it) =>
+        it.id === targetId ? { ...it, content: newContent } : it
+      )
+    );
+  };
+
   return (
     <div className="App">
       <DiaryEditor onCreate={onCreate} />
-      <DiaryList diaryList={data} />
+      <DiaryList onEdit={onEdit} diaryList={data} onRemove={onRemove} />
     </div>
   );
 }

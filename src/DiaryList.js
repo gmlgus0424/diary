@@ -1,6 +1,6 @@
 import DiaryItem from "./DiaryItem.js";
 
-const DiaryList = ({ diaryList }) => {
+const DiaryList = ({ onEdit, onRemove, diaryList }) => {
   console.log(diaryList);
   return (
     <div className="DiaryList">
@@ -9,7 +9,7 @@ const DiaryList = ({ diaryList }) => {
 
       <div>
         {diaryList.map((it) => (
-          <DiaryItem key={it.id} {...it} /> //스프레드 연산자로 보여주기
+          <DiaryItem key={it.id} {...it} onEdit={onEdit} onRemove={onRemove} />
         ))}
       </div>
     </div>

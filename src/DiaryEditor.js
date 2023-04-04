@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 //위에 글씨적으면 아래 고정 코드
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
   const authorInput = useRef();
   const contentInput = useRef();
 
@@ -31,9 +31,18 @@ const DiaryEditor = () => {
       //focus
       contentInput.current.focus();
     }
-    console.log(state);
+
+    //초기화
+    onCreate(state.author, state.content, state.emotion, state.weather);
 
     alert("저장 성공!");
+
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+      weather: "",
+    });
   };
 
   return (
