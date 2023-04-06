@@ -59,7 +59,7 @@ const DiaryItem = ({
         <span className="date">
           {new Date(create_date).toLocaleDateString()}
         </span>
-        <span className="weather"> | 날씨 : {weather}</span>
+        <span className="weather"> | 날씨 : {weather || ""}</span>
       </div>
 
       <div className="content">

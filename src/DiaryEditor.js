@@ -9,7 +9,7 @@ const DiaryEditor = ({ onCreate }) => {
     author: "",
     content: "",
     emotion: 1,
-    weather: "",
+    weather: "Sunny",
   });
 
   //이벤트 합치기
@@ -89,10 +89,10 @@ const DiaryEditor = ({ onCreate }) => {
           value={state.weather}
           onChange={handleChangeState}
         >
-          <option value={1}>맑음</option>
-          <option value={2}>흐림</option>
-          <option value={3}>비</option>
-          <option value={4}>구름 많음</option>
+          <option value="맑음">맑음</option>
+          <option value="흐림">흐림</option>
+          <option value="비">비</option>
+          <option value="구름많음">구름 많음</option>
         </select>
       </div>
       <div>
