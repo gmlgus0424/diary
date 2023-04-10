@@ -1,36 +1,22 @@
 import DiaryItem from "./DiaryItem.js";
+import { DiaryStateContext } from "./App.js";
+import React, { useContext } from "react";
 
-const DiaryList = ({ onEdit, onRemove, diaryList }) => {
-  const weatherList = ["맑음", "흐림", "비", "눈"];
+const DiaryList = () => {
+  const { data } = useContext(DiaryStateContext);
 
   return (
-    <div className="DiaryList">
+    <div className="DiaryList_container">
       <h2>일기 리스트</h2>
-      <h4>{diaryList.length}개의 일기가 있습니다</h4>
+      <h4>{data.length}개의 일기가 있습니다</h4>
 
       <div>
-        {diaryList.map((it) => {
-          const weatherIndex = Math.floor(Math.random() * weatherList.length);
-          const weather = weatherList[weatherIndex];
-
-          return (
-            <DiaryItem
-              key={it.id}
-              {...it}
-              onEdit={onEdit}
-              onRemove={onRemove}
-              weather={weather}
-            />
-          );
-        })}
+        {data.map((it, idx) => (
+          <DiaryItem key={`diaryitem_${it.id}`} {...it} />
+        ))}
       </div>
     </div>
   );
-};
-
-//props 지정 안해줘도 기본값으로 전달
-DiaryList.defaultProps = {
-  diaryList: [],
 };
 
 export default DiaryList;

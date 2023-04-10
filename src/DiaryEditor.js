@@ -1,69 +1,77 @@
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext, memo } from "react";
+import { DiaryDispatchContext } from "./App";
 
-//위에 글씨적으면 아래 고정 코드
-const DiaryEditor = ({ onCreate }) => {
-  const authorInput = useRef();
-  const contentInput = useRef();
+//저장하기 버튼을 눌렀을때 데이터 아이템 추가해주는 ~
+const DiaryEditor = () => {
+  const { onCreate } = useContext(DiaryDispatchContext);
+  useEffect(() => {
+    console.log("다이어리 렌더");
+  });
 
-  const [state, setState] = useState({
+  const [diary, setDiary] = useState({
     author: "",
     content: "",
     emotion: 1,
-    weather: "Sunny",
   });
 
   //이벤트 합치기
-  const handleChangeState = (e) => {
-    setState({
-      ...state,
+  const handleChangeDiary = (e) => {
+    setDiary({
+      ...diary,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = () => {
-    if (state.author.length < 1) {
+  const handleAddButtonClick = () => {
+    alert("일기가 추가되었어요!");
+    return;
+    console.log("추가될 일기 : ", diary);
+
+    if (diary.author.length < 1) {
       //focus
-      authorInput.current.focus();
+      authorRef.current.focus();
       return;
     }
 
-    if (state.content.length < 5) {
+    if (diary.content.length < 5) {
       //focus
-      contentInput.current.focus();
+      contentRef.current.focus();
     }
 
     //초기화
-    onCreate(state.author, state.content, state.emotion, state.weather);
+    onCreate(diary.author, diary.content, diary.emotion, diary.weather);
 
-    alert("저장 성공!");
+    alert("일기가 성공적으로 추가되었습니다");
 
-    setState({
+    setDiary({
       author: "",
       content: "",
       emotion: 1,
-      weather: "",
     });
   };
 
+  const authorRef = useRef(null);
+  const contentRef = useRef(null);
+
   return (
-    <div className="DiaryEditor">
+    <div className="DiaryEditor_container">
       <h2>오늘의 일기</h2>
       <div>
         <input
-          ref={authorInput}
+          ref={authorRef}
           name="author"
-          value={state.author}
-          onChange={handleChangeState}
+          value={diary.author}
+          onChange={handleChangeDiary}
           placeholder="작성자"
           type="text"
         />
       </div>
       <div>
         <textarea
-          ref={contentInput}
+          ref={contentRef}
           name="content"
-          value={state.content}
-          onChange={handleChangeState}
+          value={diary.content}
+          onChange={handleChangeDiary}
           placeholder="일기"
           type="text"
         />
@@ -72,8 +80,8 @@ const DiaryEditor = ({ onCreate }) => {
         <span>오늘의 감정점수 : </span>
         <select
           name="emotion"
-          value={state.emotion}
-          onChange={handleChangeState}
+          value={diary.emotion}
+          onChange={handleChangeDiary}
         >
           <option value={1}>1</option>
           <option value={2}>2</option>
@@ -83,24 +91,11 @@ const DiaryEditor = ({ onCreate }) => {
         </select>
       </div>
       <div>
-        <span>오늘의 날씨 : </span>
-        <select
-          name="weather"
-          value={state.weather}
-          onChange={handleChangeState}
-        >
-          <option value="맑음">맑음</option>
-          <option value="흐림">흐림</option>
-          <option value="비">비</option>
-          <option value="구름많음">구름 많음</option>
-        </select>
-      </div>
-      <div>
-        <button onClick={handleSubmit}>일기 저장하기 </button>
+        <button onClick={handleAddButtonClick}>일기 저장하기 </button>
       </div>
     </div>
   );
 };
-export default DiaryEditor;
+export default memo(DiaryEditor);
 
 //select 부분 감정점수
